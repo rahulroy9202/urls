@@ -2,7 +2,7 @@
 //  OpenShift sample Node application
 var express = require('express');
 var fs      = require('fs');
-
+var bodyParser = require('body-parser');
 
 /**
  *  Define the sample application.
@@ -43,7 +43,7 @@ var SampleApp = function() {
         }
 
         //  Local cache for static content.
-        self.zcache['index.html'] = fs.readFileSync('./index.html');
+        self.zcache['index.html'] = fs.readFileSync('./public/index.html');
     };
 
 
@@ -113,8 +113,26 @@ var SampleApp = function() {
      */
     self.initializeServer = function() {
         self.createRoutes();
-        self.app = express.createServer();
-
+        self.app = express();
+		
+		self.app.use(function(req, res, next) {
+			if (req.url.toString() !== "/status/") {
+				console.log(req.url); // just for debugging
+				console.log(req.body);
+				//console.log("REQ- \n",Object.keys( req));
+			}
+			res.header("Access-Control-Allow-Origin", "*");
+			res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+			next();
+		});
+		
+		self.app.use(express.static(__dirname + '/public'));
+		self.app.use(bodyParser.json()); // to support JSON-encoded bodies
+		self.app.use(bodyParser.urlencoded({
+			extended: true
+		}));
+		
+		
         //  Add handlers for the app (from the routes).
         for (var r in self.routes) {
             self.app.get(r, self.routes[r]);

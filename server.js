@@ -4,8 +4,8 @@ var utils = require('./utils');
 var app = express();
 
 app.use(express.static(__dirname + '/public'));
-app.use(bodyParser.json());       // to support JSON-encoded bodies
-app.use(bodyParser.urlencoded({// to support URL-encoded bodies
+app.use(bodyParser.json());       	// to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({		// to support URL-encoded bodies
     extended: true
 }));
 
@@ -21,7 +21,6 @@ var dburl = "mongodb://cloud9:cloud9@kahana.mongohq.com:10099/doba";
 
 utils.initDB(dburl);
 app.listen(port, ipaddress);
-
 
 app.get('/:surl', function(req, res) {
     res.send('everything ok - server');

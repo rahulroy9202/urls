@@ -1,34 +1,74 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var morgan = require('morgan');
 var utils = require('./utils');
-var app = express();
+var config = require('./config');
 
+var app = express();
+var auth = utils.authenticate;
+
+app.use(morgan('dev'));
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());       	// to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({		// to support URL-encoded bodies
-    extended: true
+	extended: true
 }));
 
 app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
+	//console.log(req.headers);
+	//console.log(req.headers.referrer);
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	next();
 });
 
-var ipaddress = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
-var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080;
-var dburl = "mongodb://cloud9:cloud9@kahana.mongohq.com:10099/doba";
 
-utils.initDB(dburl);
-app.listen(port, ipaddress);
+utils.initDB(config.dburl);
+app.listen(config.port, config.ipaddress);
 
+
+app.post('/api/v1/login/', function(req, res) {
+	
+	auth(req, res, function (_user) {
+		console.log(_user);
+		return res.json({status:'ok', user: _user});
+	});
+	
+});
+
+app.post('/api/v1/signup/', function(req, res) {
+
+	utils.signup(req, res, function (_user) {
+		console.log(_user);
+		return res.json({status:'ok', user: _user});
+	});
+	
+});
+
+
+
+
+
+
+/*
 app.get('/:surl', function(req, res) {
+	
     res.send('everything ok - server');
 });
+
+
+app.get('/url/', function(req, res) {
+	
+    res.send('2 everything ok - server');
+});
+
 
 app.post('/:surl', function(req, res) {
 	console.log(req.url);
 	console.log(req.body);
-	console.log(req.headers);
+	//console.log(req.headers);
 	res.json({status:'everything ok - server'});
 });
+
+*/
+

@@ -1,0 +1,63 @@
+#signup,#login,#profile,#management,.view{
+	//display: none;
+	height: 677px;
+}
+
+
+#signup,#login {
+	margin-top: 90px;
+}
+
+#profile {
+	margin-top: 35px;
+}
+
+
+.row-centered {
+    text-align:center;
+}
+
+
+.col-centered {
+    display:inline-block;
+    float:none;
+    /* reset the text-align */
+    text-align:left;
+    /* inline-block space fix */
+    margin-right:-4px;
+}
+
+
+.datepicker {
+	//width: inherit;
+	//margin: auto;
+	//margin-top: 50px;
+}
+
+.inline {
+	display: inline;
+	text-align:center;
+}
+
+.new_leave {
+	margin-top: 50px;
+	margin: auto;
+	width: 300px;
+}
+
+.user_applications_display {
+	display: inline-block;
+}
+
+.hdays, .approved {
+	/*color: #800000 !important ;*/
+	color: #9acd32 !important ;
+}
+
+.pending {
+	color: #00bfff !important ;
+}
+
+.rejected {
+	color: #ff6347 !important ;
+}

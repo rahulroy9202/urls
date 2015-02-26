@@ -10,12 +10,6 @@ var app = express();
 var auth = utils.authenticate;
 
 app.use(morgan('dev'));
-app.use(express.static(__dirname + '/public'));
-app.use(bodyParser.json());       	// to support JSON-encoded bodies
-app.use(bodyParser.urlencoded({		// to support URL-encoded bodies
-	extended: true
-}));
-
 app.use(function(req, res, next) {
 	//console.log(req.headers);
 	//console.log(req.headers.referrer);
@@ -24,8 +18,42 @@ app.use(function(req, res, next) {
 	next();
 });
 
-utils.initDB(config.dburl);
+
+
+app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.json());       	// to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({		// to support URL-encoded bodies
+	extended: true
+}));
+
+
+utils.initDB(config.dburl, utils.initDB);
 app.listen(config.port, config.ipaddress);
+
+
+
+app.get('/:surl/', function (req, res) {
+	
+	var _surl = req.params.surl;
+	
+	urlMap.findOne({
+		surl: _surl
+	}, function (err, doc) {
+	
+		if (!err && doc!=null){
+			res.redirect(301, doc.lurl);			console.log("TODO: Do the logging");
+			return console.log(req.headers,new Date(),doc);
+		}
+		else
+			return res.status(404).send("nada");
+		
+	});
+
+});
+
+
+
+
 
 app.post('/api/v1/login/', function(req, res) {
 	auth(req, res, function (_user) {
@@ -41,27 +69,9 @@ app.post('/api/v1/signup/', function(req, res) {
 	});
 });
 
-app.get('/:surl/', function (req, res) {
-	
-	var _surl = req.params.surl;
-	
-	urlMap.findOne({
-		surl: _surl
-	}, function (err, doc) {
-	
-		if (!err && doc!=null){
-			res.redirect(200, doc.lurl);
-			//do the logging
-			console.log(req.headers,new Date());
-		}
-		else
-			return res.status(404).send("nada");
-		
-	});
 
-});
 
-app.post('/api/v1/surl/new/', function(req, res) {
+app.post('/api/v1/lurl/new/', function(req, res) {
 	if(req.body.lurl){
 		auth(req, res, function (_user) {
 			console.log(_user);
@@ -69,17 +79,51 @@ app.post('/api/v1/surl/new/', function(req, res) {
 			urlMapData  = new urlMap();
 			urlMapData.user_id = _user._id;
 			urlMapData.lurl = req.body.lurl;
-			urlMapData.surl = utils.generateRandomSequence();  // generate new surl
+			urlMapData.surl = [utils.generateRandomSequence()];  // generate new surl
 			
-			urlMapData.save(function (err, doc) {
+			urlMapData.save(function (err, doc) {						console.log("TODO: change code to guarantee unique surl");
 				if(err){
-					urlMapData.surl = utils.generateRandomSequence();	// retry on clash of random surl. i would prefer using the _id as the surl but it is quiet long.
+					urlMapData.surl = [utils.generateRandomSequence()];	// retry on clash of random surl. i would prefer using the _id as the first surl but it is quiet long.
 					urlMapData.save();
 				}
+				else
+					return res.json({status:'ok', lurl: doc});
 			});
 			
 		});
 	}
+	else
+		return res.status(500).json({status: "err - insuficient data"});
+});
+
+app.post('/api/v1/lurl/addsurl/', function(req, res) {
+	if(req.body.lurl_id){
+		auth(req, res, function (_user) {
+			console.log(_user);
+			
+				urlMap.findOne({
+					_id: req.body.lurl_id,
+					user_id: _user._id
+				}, function (err, doc) {
+				
+					if (!err && doc!=null){
+						
+						doc.surl.push(utils.generateRandomSequence()); 		console.log("TODO: change code to guarantee unique new surl");
+						
+						doc.markModified('surl');
+						doc.save(function(err, _doc) {
+							if(!err)	return res.json({status:'ok', lurl: _doc});
+						});
+					}
+					else
+						return res.status(404).json({status:"nada"});
+					
+				});
+			
+		});
+	}
+	else
+		return res.status(500).json({status: "err - insuficient data"});
 });
 
 

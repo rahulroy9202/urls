@@ -1,7 +1,7 @@
 var mongoose = require("mongoose");
 var userModel = require("./models/user");
 
-module.exports.initDB = function (_url) {
+module.exports.initDB = function (_url, _cb) {
 	
     var options = {
         db: {native_parser: true},
@@ -26,9 +26,13 @@ module.exports.initDB = function (_url) {
     db.on('disconnected', function() {
         console.log('MongoDB disconnected!');
         
-		setTimeout(function () {
-			mongoose.connect(_url, options);
-		}, 100)
+		if(typeof(_cb)==='function'){
+			console.log(_url, options);
+			setTimeout(function () {
+				_cb(_url)
+				//mongoose.connect(_url, options);
+			}, 100)
+		}
 
     });
 	
@@ -63,7 +67,8 @@ module.exports.authenticate = function (req, res, callback) {
 
 		});
 	}
-	return res.status(500).json({status: "err - auth fail - data missing"});
+	else
+		return res.status(500).json({status: "err - auth fail - data missing"});
 }
 
 
@@ -80,7 +85,8 @@ module.exports.signup = function (req, res, callback) {
         });
 		
 	}
-	return res.status(500).json({status: "err - auth fail - data missing"});
+	else
+		return res.status(500).json({status: "err - auth fail - data missing"});
 }
 
 

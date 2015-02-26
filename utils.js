@@ -25,7 +25,11 @@ module.exports.initDB = function (_url) {
 	
     db.on('disconnected', function() {
         console.log('MongoDB disconnected!');
-        mongoose.connect(_url, options);
+        
+		setTimeout(function () {
+			mongoose.connect(_url, options);
+		}, 100)
+
     });
 	
     db.once('open', function() {
@@ -46,19 +50,20 @@ module.exports.authenticate = function (req, res, callback) {
 	if(req.body.email && req.body.password){
 		userModel.findOne({ email: req.body.email }, function(err, user) {
 			if (err) {
-				return res.json({status: "err - auth fail"});
+				return res.status(500).json({status: "err - auth fail", error: err});
 			}
 			if (user === null) {
-				return res.json({status: "err - no user match"});
+				return res.status(401).json({status: "err - no user match"});
 			}
 			else {
 				if(user.validPassword(req.body.password))
 					return callback({_id: user._id, email: user.email});
-				return res.json({status: "err - wrong pwd"});
+				return res.status(401).json({status: "err - wrong pwd"});
 			}
 
 		});
 	}
+	return res.status(500).json({status: "err - auth fail - data missing"});
 }
 
 
@@ -70,9 +75,10 @@ module.exports.signup = function (req, res, callback) {
 		userData.password = userData.generateHash(req.body.password);
 		
 		userData.save(function(err, user) {
-            if (err) return res.json({status: "err - signup fail"});
+            if (err) return res.status(500).json({status: "err - signup fail", error: err});
 			return callback({_id: user._id, email: user.email});
         });
 		
 	}
+	return res.status(500).json({status: "err - auth fail - data missing"});
 }

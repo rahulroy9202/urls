@@ -82,3 +82,12 @@ module.exports.signup = function (req, res, callback) {
 	}
 	return res.status(500).json({status: "err - auth fail - data missing"});
 }
+
+
+module.exports.generateRandomSequence = function () {
+    var str = "";
+    while (str.length < 5) {
+        str = Math.random().toString(36).slice(2);
+    }
+    return str;
+}

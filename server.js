@@ -42,33 +42,48 @@ app.post('/api/v1/signup/', function(req, res) {
 });
 
 app.get('/:surl/', function (req, res) {
-
+	
 	var _surl = req.params.surl;
-
+	
 	urlMap.findOne({
 		surl: _surl
 	}, function (err, doc) {
 	
 		if (!err && doc!=null){
-			res.redirect(301, doc.lurl);
+			res.redirect(200, doc.lurl);
 			//do the logging
+			console.log(req.headers,new Date());
 		}
 		else
-			return res.status(404).send({status: "nada"});
+			return res.status(404).send("nada");
 		
 	});
 
 });
 
-
-/*
 app.post('/api/v1/surl/new/', function(req, res) {
-	auth(req, res, function (_user) {
-		console.log(_user);
-		return res.json({status:'ok', user: _user});
-	});
+	if(req.body.lurl){
+		auth(req, res, function (_user) {
+			console.log(_user);
+			
+			urlMapData  = new urlMap();
+			urlMapData.user_id = _user._id;
+			urlMapData.lurl = req.body.lurl;
+			urlMapData.surl = utils.generateRandomSequence();  // generate new surl
+			
+			urlMapData.save(function (err, doc) {
+				if(err){
+					urlMapData.surl = utils.generateRandomSequence();	// retry on clash of random surl. i would prefer using the _id as the surl but it is quiet long.
+					urlMapData.save();
+				}
+			});
+			
+		});
+	}
 });
 
+
+/*
 app.post('/api/v1/surl/get/', function(req, res) {
 	auth(req, res, function (_user) {
 		console.log(_user);

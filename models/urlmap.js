@@ -15,6 +15,16 @@ var urlMapSchema = mongoose.Schema({
 	user_id: {
 		type: String,
 		required: true
+	},
+	
+	created: {
+		type: Date,
+		required: true
+	},
+	
+	updated: {
+		type: Date,
+		required: true
 	}
 });
 

@@ -4,6 +4,7 @@ var morgan = require('morgan');
 var utils = require('./utils');
 var config = require('./config');
 var urlMap = require("./models/urlmap");
+var accessLogger = require("./models/accesslogger");
 
 
 var app = express();
@@ -13,6 +14,8 @@ app.use(morgan('dev'));
 app.use(function(req, res, next) {
 	//console.log(req.headers);
 	//console.log(req.headers.referrer);
+	var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+	console.log("IP: ",ip);
 	res.header("Access-Control-Allow-Origin", "*");
 	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 	next();
@@ -42,7 +45,11 @@ app.get('/:surl/', function (req, res) {
 	
 		if (!err && doc!=null){
 			res.redirect(301, doc.lurl);			console.log("TODO: Do the logging");
-			return console.log(req.headers,new Date(),doc);
+			/*
+			accessData = new accessLogger();
+			accessData.data = accessData.processHeaders(req.headers);
+			*/
+			//return console.log(req.headers,new Date(),doc);
 		}
 		else
 			return res.status(404).send("nada");
@@ -74,12 +81,13 @@ app.post('/api/v1/signup/', function(req, res) {
 app.post('/api/v1/lurl/new/', function(req, res) {
 	if(req.body.lurl){
 		auth(req, res, function (_user) {
-			console.log(_user);
-			
+
 			urlMapData  = new urlMap();
 			urlMapData.user_id = _user._id;
 			urlMapData.lurl = req.body.lurl;
 			urlMapData.surl = [utils.generateRandomSequence()];  // generate new surl
+			urlMapData.created = new Date();
+			urlMapData.updated = new Date();
 			
 			urlMapData.save(function (err, doc) {						console.log("TODO: change code to guarantee unique surl");
 				if(err){
@@ -88,6 +96,21 @@ app.post('/api/v1/lurl/new/', function(req, res) {
 				}
 				else
 					return res.json({status:'ok', lurl: doc});
+			});
+			
+		});
+	}
+	else
+		return res.status(500).json({status: "err - insuficient data"});
+});
+
+app.post('/api/v1/lurl/get/', function(req, res) {
+	if(req.body.page  && req.body.max_res){
+		auth(req, res, function (_user) {
+			
+			urlMap.find({user_id: _user._id}).sort({updated:-1}).limit(req.body.max_res).skip(req.body.page * req.body.max_res).exec(function(err, _lurls){
+				if(!err)	return res.json({status:'ok', lurls: _lurls});
+					return res.status(500).json({status: "err - boom"});
 			});
 			
 		});
@@ -109,8 +132,9 @@ app.post('/api/v1/lurl/addsurl/', function(req, res) {
 					if (!err && doc!=null){
 						
 						doc.surl.push(utils.generateRandomSequence()); 		console.log("TODO: change code to guarantee unique new surl");
-						
+						doc.updated = new Date();
 						doc.markModified('surl');
+						
 						doc.save(function(err, _doc) {
 							if(!err)	return res.json({status:'ok', lurl: _doc});
 						});
@@ -119,7 +143,6 @@ app.post('/api/v1/lurl/addsurl/', function(req, res) {
 						return res.status(404).json({status:"nada"});
 					
 				});
-			
 		});
 	}
 	else

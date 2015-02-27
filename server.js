@@ -14,8 +14,8 @@ app.use(morgan('dev'));
 app.use(function(req, res, next) {
 	//console.log(req.headers);
 	//console.log(req.headers.referrer);
-	var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-	console.log("IP: ",ip);
+	
+
 	res.header("Access-Control-Allow-Origin", "*");
 	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 	next();
@@ -49,7 +49,10 @@ app.get('/:surl/', function (req, res) {
 			accessData = new accessLogger();
 			accessData.data = accessData.processHeaders(req.headers);
 			*/
-			//return console.log(req.headers,new Date(),doc);
+			
+			var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+			console.log("\nIP: ",ip);
+			return console.log(req.headers,new Date(),doc);
 		}
 		else
 			return res.status(404).send("nada");

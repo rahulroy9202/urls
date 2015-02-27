@@ -51,8 +51,11 @@ app.get('/:surl/', function (req, res) {
 			*/
 			
 			var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-			console.log("\nIP: ",ip,' \n--- ',req.connection);
-			return console.log(req.headers,new Date(),doc);
+			console.log("\nIP: ",ip);//,' \n--- \n',req.connection);
+			console.log("\nREFFERER: ",req.headers.referrer);
+			console.log("\nUser Agent-: ",req.headers['user-agent']);
+			console.log("\n--------------------------------");
+			//return console.log(req.headers,new Date(),doc);
 		}
 		else
 			return res.status(404).send("nada");

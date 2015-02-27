@@ -44,14 +44,14 @@ app.get('/:surl/', function (req, res) {
 	}, function (err, doc) {
 	
 		if (!err && doc!=null){
-			res.redirect(301, doc.lurl);			console.log("TODO: Do the logging");
+			res.redirect(301, doc.lurl);			console.log("\nTODO: Do the logging");
 			/*
 			accessData = new accessLogger();
 			accessData.data = accessData.processHeaders(req.headers);
 			*/
 			
 			var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-			console.log("\nIP: ",ip);
+			console.log("\nIP: ",ip,' \n--- ',req.connection);
 			return console.log(req.headers,new Date(),doc);
 		}
 		else

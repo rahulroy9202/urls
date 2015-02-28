@@ -1,12 +1,12 @@
 // client library for urls. api v1 user
 
-function User(_email, _pwd) {
+function User(_email, _pwd, _rem) {
 
 	if (_email && _pwd) {
 		this.email = _email;
 		this.password = _pwd;
 	}
-
+	this.remember = _rem || false;
 	this.isLoggedIn = false;
 }
 

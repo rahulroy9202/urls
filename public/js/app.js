@@ -29,7 +29,8 @@ App.prototype = {
 	constructor: App,	
 	
 	login: function() {
-		app.user = new User($('#login-username').val(),$('#login-password').val());
+		
+		app.user = new User($('#login-username').val(), $('#login-password').val(), $('#remember').prop('checked'));
 		app.server.login(app.user, app.cb_login);
 	},
 	
@@ -41,8 +42,11 @@ App.prototype = {
 	cb_login: function (data) {
 		console.log(data);
 		
-		if(data.status === 'ok')
+		if(data.status === 'ok'){
 			app.showUserProfile();
+			if(this.user.rememeber)
+				this.user.createCookie();
+		}
 		else
 			alert("error - ", data.status);
 		

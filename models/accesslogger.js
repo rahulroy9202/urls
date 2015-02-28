@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var loggerSchema = mongoose.Schema({
 
 	surl: {
-		type: [String],
+		type: String,
 		required: true
 	},
 	

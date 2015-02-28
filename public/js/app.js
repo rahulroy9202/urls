@@ -38,6 +38,13 @@ App.prototype = {
 		app.view.show(app.view.pages[0]);
 	},
 	
+	signup: function() {
+		if($('#signup-password').val() ==  $('#signup-password-confirm').val()){
+			app.user = new User($('#signup-username').val(), $('#signup-password').val());
+			app.server.signup(app.user, app.cb_signup);
+		}
+	},
+	
 	showUserProfile: function() {
 		app.view.show(app.view.pages[3]);
 		app.view.reflectLogin();
@@ -45,7 +52,6 @@ App.prototype = {
 	
 	cb_login: function (data) {
 		console.log(data);
-		
 		if(data.status === 'ok'){
 			app.showUserProfile();
 			if(app.user.remember)
@@ -53,7 +59,16 @@ App.prototype = {
 		}
 		else
 			alert("error - ", data.status);
-		
+	},
+	
+	cb_signup: function (data) {
+		console.log(data);
+		if(data.status === 'ok'){
+			app.view.showMessage("Signup Success");
+			app.view.show(app.view.pages[0]);
+		}
+		else
+			app.view.showMessage("Signup Wrror - Please Try Again");
 	}
 	
 

@@ -10,6 +10,8 @@ var accessLogger = require("./models/accesslogger");
 var app = express();
 var auth = utils.authenticate;
 
+
+app.use(express.static(__dirname + '/public'));
 app.use(morgan('dev'));
 app.use(function(req, res, next) {
 	//console.log(req.headers);
@@ -23,7 +25,7 @@ app.use(function(req, res, next) {
 
 
 
-app.use(express.static(__dirname + '/public'));
+
 app.use(bodyParser.json());       	// to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({		// to support URL-encoded bodies
 	extended: true

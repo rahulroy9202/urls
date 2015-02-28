@@ -16,7 +16,7 @@ module.exports.initDB = function (_url, _cb) {
 	
     db.on('error', function(error) {
         console.error('Error in MongoDb connection: ' + error);
-        mongoose.disconnect();
+        //mongoose.disconnect();
     });
 	
     db.on('reconnected', function() {

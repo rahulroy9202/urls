@@ -48,8 +48,8 @@ App.prototype = {
 		
 		if(data.status === 'ok'){
 			app.showUserProfile();
-			if(this.user.remember)
-				this.user.createCookie();
+			if(app.user.remember)
+				app.user.createCookie();
 		}
 		else
 			alert("error - ", data.status);

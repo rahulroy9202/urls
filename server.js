@@ -45,15 +45,18 @@ app.get('/:surl/', function (req, res) {
 	
 		if (!err && doc!=null){
 			res.redirect(301, doc.lurl);			console.log("\nTODO: Do the logging");
-			/*
-			accessData = new accessLogger();
-			accessData.data = accessData.processHeaders(req.headers);
-			*/
 			
 			var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+			
+			accessData = new accessLogger();
+			accessData.processHeaders(req.headers);
+			accessData.ip = ip;
+			accessData.save();
+			
+			
 			console.log("\nIP: ",ip);//,' \n--- \n',req.connection);
 			console.log("\nREFFERER: ",req.headers.referer);
-			console.log("\nUser Agent-: ",req.headers['user-agent']);
+			console.log("\nUser-Agent: ",req.headers['user-agent']);
 			console.log("\n--------------------------------");
 			//return console.log(req.headers,new Date(),doc);
 		}
@@ -66,6 +69,9 @@ app.get('/:surl/', function (req, res) {
 
 
 
+app.get('/api/v1/domains/', function(req, res) {
+	return res.json({status:'ok', domains: config.domains});
+});
 
 
 app.post('/api/v1/login/', function(req, res) {

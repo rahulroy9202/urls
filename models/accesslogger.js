@@ -7,9 +7,16 @@ var loggerSchema = mongoose.Schema({
 		required: true
 	},
 	
-	data: {
+	user_agent: {
 		type: String,
-		required: true
+	},
+	
+	ip: {
+		type: String,
+	},
+	
+	referer: {
+		type: String,
 	},
 	
 	accessed: {
@@ -19,7 +26,8 @@ var loggerSchema = mongoose.Schema({
 });
 
 loggerSchema.methods.processHeaders = function(headers) {
-    //this.
+    this.user_agent = headers['user-agent'];
+	this.referer = headers.referer;
 };
 
 module.exports = mongoose.model('accesslog', loggerSchema);

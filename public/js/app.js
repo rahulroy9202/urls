@@ -15,7 +15,7 @@ function App() {
 	if(this.user.readCookie()){
 		this.server.login(this.user, function(data){
 			console.log(data);
-			if(data.status === 'ok'){
+			if(data.status === 'ok') {
 				app.showUserProfile();
 				app.user.isLoggedIn = true;
 			}
@@ -48,7 +48,7 @@ App.prototype = {
 		
 		if(data.status === 'ok'){
 			app.showUserProfile();
-			if(this.user.rememeber)
+			if(this.user.remember)
 				this.user.createCookie();
 		}
 		else

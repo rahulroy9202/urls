@@ -17,7 +17,7 @@ function App() {
 			console.log(data);
 			if(data.status === 'ok'){
 				app.showUserProfile();
-				this.user.isLoggedIn = true;
+				app.user.isLoggedIn = true;
 			}
 		});
 	}
@@ -28,10 +28,14 @@ App.prototype = {
 	
 	constructor: App,	
 	
-	login: function() {
-		
+	login: function() {	
 		app.user = new User($('#login-username').val(), $('#login-password').val(), $('#remember').prop('checked'));
 		app.server.login(app.user, app.cb_login);
+	},
+	
+	logout: function() {
+		app.user.logout(true);		//true removes cookies too.
+		app.view.show(app.view.pages[0]);
 	},
 	
 	showUserProfile: function() {

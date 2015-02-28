@@ -58,7 +58,6 @@ app.get('/:surl/', function (req, res) {
 			
 			accessData.save();
 			
-			
 			console.log("\nIP: ",ip);//,' \n--- \n',req.connection);
 			console.log("\nREFFERER: ",req.headers.referer);
 			console.log("\nUser-Agent: ",req.headers['user-agent']);
@@ -67,17 +66,12 @@ app.get('/:surl/', function (req, res) {
 		}
 		else
 			return res.status(404).send("nada");
-		
 	});
-
 });
-
-
 
 app.get('/api/v1/domains/', function(req, res) {
 	return res.json({status:'ok', domains: config.domains});
 });
-
 
 app.post('/api/v1/login/', function(req, res) {
 	auth(req, res, function (_user) {
@@ -93,18 +87,15 @@ app.post('/api/v1/signup/', function(req, res) {
 	});
 });
 
-
-
 app.post('/api/v1/lurl/new/', function(req, res) {
 	if(req.body.lurl){
 		auth(req, res, function (_user) {
-
+			
 			urlMapData  = new urlMap();
 			urlMapData.user_id = _user._id;
 			urlMapData.lurl = req.body.lurl;
 			urlMapData.surl = [utils.generateRandomSequence()];  // generate new surl
-			urlMapData.created = new Date();
-			urlMapData.updated = new Date();
+			urlMapData.created = urlMapData.updated = new Date();
 			
 			urlMapData.save(function (err, doc) {						console.log("TODO: change code to guarantee unique surl");
 				if(err){
@@ -114,7 +105,6 @@ app.post('/api/v1/lurl/new/', function(req, res) {
 				else
 					return res.json({status:'ok', lurl: doc});
 			});
-			
 		});
 	}
 	else
@@ -158,7 +148,6 @@ app.post('/api/v1/lurl/addsurl/', function(req, res) {
 					}
 					else
 						return res.status(404).json({status:"nada"});
-					
 				});
 		});
 	}

@@ -51,7 +51,7 @@ App.prototype = {
 	},
 	
 	cb_login: function (data) {
-		console.log(data);
+
 		if(data.status === 'ok'){
 			app.showUserProfile();
 			if(app.user.remember)
@@ -62,7 +62,7 @@ App.prototype = {
 	},
 	
 	cb_signup: function (data) {
-		console.log(data);
+
 		if(data.status === 'ok'){
 			app.view.showMessage("Signup Success");
 			app.view.show(app.view.pages[0]);

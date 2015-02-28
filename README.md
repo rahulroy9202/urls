@@ -1,3 +1,5 @@
+source - http://just-write.co/view-doc.php?id=72
+
 Objective
 
 As a user, I should be able 
@@ -25,6 +27,8 @@ Type in a long url and get a short url in return
 See analytics of a specific short url
 See analytics of a specific long url ( Aggregated from many short urls that point to it )
 Documentation explaining how to setup the application on a bare server
+
+
 
 
 

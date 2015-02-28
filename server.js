@@ -51,6 +51,7 @@ app.get('/:surl/', function (req, res) {
 			accessData = new accessLogger();
 			accessData.processHeaders(req.headers);
 			accessData.ip = ip;
+			accessData.surl = _surl;
 			accessData.accessed = new Date();
 			
 			accessData.save();

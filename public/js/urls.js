@@ -10,7 +10,7 @@ UrlsServer.prototype = {
 	constructor: UrlsServer,
 	
 	login: function(_user, _cb) {
-		CustomAJAX('POST', this.url + '/api/v1/signin/',{email: _user.email, password: _user.password}, _cb);
+		CustomAJAX('POST', this.url + '/api/v1/login/',{email: _user.email, password: _user.password}, _cb);
 	}
 	
 	

@@ -31,8 +31,15 @@ View.prototype = {
 
 	reflectLogin: function() {
 		$('#user_logout_button').toggle(true);
-		$('#brand').html( "urls " + "  -  " + app.user.email);
+		$('#brand').html("  -  " + app.user.email);
 		$('#brand').click(app.showUserProfile);
+		
+	},
+	
+	reflectLogout: function() {
+		$('#user_logout_button').toggle(false);
+		$('#brand').html( "  -  by rahulroy9202@gmail.com");
+		$('#brand').click(null);
 		
 	}
 

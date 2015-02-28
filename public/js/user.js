@@ -1,20 +1,19 @@
 // client library for urls. api v1 user
 
-function User(email, pwd, server) {
+function User(_email, _pwd) {
 
-	if (email && pwd) {
-		this.email = email;
-		this.password = pwd;
-		//this.server = server;
+	if (_email && _pwd) {
+		this.email = _email;
+		this.password = _pwd;
 	}
 
-	this.id = -1;
+	this.isLoggedIn = false;
 }
 
 User.prototype = {
-
+	
 	constructor: User,
-
+	
 	createCookie: function () {
 		$.cookie("u_email", this.email, {
 			expires: 2000
@@ -23,7 +22,7 @@ User.prototype = {
 			expires: 2000
 		});
 	},
-
+	
 	readCookie: function () {
 		if ((typeof $.cookie("u_email") != 'undefined') && (typeof $.cookie("u_password") != 'undefined')) {
 			this.email = $.cookie("u_email");
@@ -33,18 +32,19 @@ User.prototype = {
 		}
 		return false;
 	},
-
+	
 	clearCookie: function () {
 		$.removeCookie("u_email");
 		$.removeCookie("u_password");
 	},
-
+	
 	logout: function (_forget) {
 		if (_forget)
 			this.clearCookie();
 		this.email = this.password = null;
+		this.isLoggedIn = false;
 	},
-
+	
 	toJSON: function () {
 		return {
 			email: this.email,

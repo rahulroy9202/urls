@@ -6,13 +6,20 @@ $(document).ready(function() {
 });
 
 function App() {
-	
-	//this.view = new View();
-	//this.view.show(this.view.pages[0]);
+	//for secured connection. I don't have a certificate. so cannot do https over urls.rahulroy9202.in
+	this.server = new UrlsServer("https://urls-rahulroy9202.rhcloud.com");
+	this.view = new View();
+	this.view.show(this.view.pages[0]);
 	this.user = new User();
 	
 	if(this.user.readCookie()){
-
+		this.server.login(this.user, function(data){
+			console.log(data);
+			if(data.status === 'ok'){
+				app.showUserProfile();
+				this.user.isLoggedIn = true;
+			}
+		});
 	}
 }
 
@@ -23,24 +30,22 @@ App.prototype = {
 	
 	login: function() {
 		app.user = new User($('#login-username').val(),$('#login-password').val());
-		app.lmsServer.login(app.user.toJSON(), app.cb_login);
+		app.server.login(app.user, app.cb_login);
 	},
 	
 	showUserProfile: function() {
 		app.view.show(app.view.pages[3]);
-		app.lmsServer.getLeaves(app.user.toJSON(), app.cb_getLeaves);
-	},
-	
-	showAdminPage: function() {
-		app.view.show(app.view.pages[4]);
-		app.lmsServer.getLeavesAdmin(app.user.toJSON(), app.cb_getAdminLeaves);
+		app.view.reflectLogin();
 	},
 	
 	cb_login: function (data) {
 		console.log(data);
 		
-		app.user.id = data.id;
-				
+		if(data.status === 'ok')
+			app.showUserProfile();
+		else
+			alert("error - ", data.status);
+		
 	}
 	
 

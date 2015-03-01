@@ -66,18 +66,23 @@ App.prototype = {
 		var _lurl = $('#new-lurl').val();
 		if(_lurl != '') {
 			app.server.newLurl(app.user, _lurl, app.cb_newLurl);
+			$('#btn-confirm').prop("disabled",true);
 		}
 		else
 			$('#new-lurl').attr("placeholder", "please paste url here");
 	},
 	
 	cb_newLurl: function(data) {
-		app.current_page = 0;
-		app.showLurlList();
+		if(data.status === 'ok'){
+			app.view.showMessage(" done - new short url ready");
+			$('#new-lurl').val('');
+			$('#btn-confirm').prop("disabled",false);
+			app.current_page = 0;
+			app.showLurlList();
+		}
 	},
 	
 	cb_showLurlList: function(data) {
-		//console.log(data);
 		if(data.status === 'ok')
 			app.view.renderLurls(data);
 	},

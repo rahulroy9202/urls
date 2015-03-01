@@ -59,7 +59,7 @@ View.prototype = {
 	renderLurls: function(_data) {
 		var html = "";
 		for(var i in _data.lurls){
-			 html = html + '<li onClick="app.showLurlDetails(&quot;' + _data.lurls[i]._id +'&quot;);"><a href="#profile" ><h3>' + _data.lurls[i].lurl + '</h3></a></li>';
+			 html = html + '<li class="lurl_list" onClick="app.showLurlDetails(&quot;' + _data.lurls[i]._id +'&quot;);"><a href="#url-details" ><h4>' + _data.lurls[i].lurl + '</h4></a></li>';
 		}
 		
 		$('#urls-list').html(html);

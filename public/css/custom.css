@@ -1,8 +1,6 @@
-#signup,#login,#profile,#management,.view{
-	//display: none;
-	height: 677px;
+#signup,#login,#profile,.view{
+	min-height: 600px;
 }
-
 
 #signup,#login {
 	margin-top: 90px;
@@ -39,25 +37,6 @@
 	text-align:center;
 }
 
-.new_leave {
-	margin-top: 50px;
-	margin: auto;
-	width: 300px;
-}
-
-.user_applications_display {
-	display: inline-block;
-}
-
-.hdays, .approved {
-	/*color: #800000 !important ;*/
-	color: #9acd32 !important ;
-}
-
-.pending {
+.lurl_list {
 	color: #00bfff !important ;
-}
-
-.rejected {
-	color: #ff6347 !important ;
 }

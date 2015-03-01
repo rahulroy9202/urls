@@ -1,7 +1,7 @@
 // client library for urls. api v1
 function UrlsServer(_url) {
 	this.url = _url;
-	this.user = null;
+	//this.user = null;
 }
 
 
@@ -15,6 +15,18 @@ UrlsServer.prototype = {
 	
 	signup: function(_user, _cb) {
 		CustomAJAX('POST', this.url + '/api/v1/signup/',{email: _user.email, password: _user.password}, _cb);
+	},
+	
+	fetchLurl: function(_user, _page, _max_res, _cb) {
+		CustomAJAX('POST', this.url + '/api/v1/lurl/get/',{email: _user.email, password: _user.password, page: _page, max_res: _max_res}, _cb);
+	},
+	
+	addSurl: function(_user, _lurlid, _cb) {
+		CustomAJAX('POST', this.url + '/api/v1/lurl/addsurl/',{email: _user.email, password: _user.password, lurl_id: _lurlid}, _cb);
+	},
+	
+	newLurl: function(_user, _lurl, _cb) {
+		CustomAJAX('POST', this.url + '/api/v1/lurl/new/',{email: _user.email, password: _user.password, lurl: _lurl}, _cb);
 	}
 	
 	
@@ -38,7 +50,8 @@ function CustomAJAX(_type, _url, _data, _cb) {
 				_cb(json);
 			}
 		},
-		error: function(xhr, status, errorThrown) {
+		error: function(xhr, _status, errorThrown) {
+			_cb({status: _status});
 			console.log("Status: " + status);
 		},
 	});

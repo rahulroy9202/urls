@@ -6,6 +6,10 @@ $(document).ready(function() {
 });
 
 function App() {
+	
+	this.max_results = 50;
+	this.current_page = 0;
+	
 	//for secured connection. I don't have a certificate. so cannot do https over urls.rahulroy9202.in
 	this.server = new UrlsServer("https://urls-rahulroy9202.rhcloud.com");
 	this.view = new View();
@@ -13,7 +17,7 @@ function App() {
 	this.user = new User();
 	
 	if(this.user.readCookie()){
-		this.server.login(this.user, function(data){
+		this.server.login(this.user, function(data) {
 			console.log(data);
 			if(data.status === 'ok') {
 				app.showUserProfile();
@@ -48,17 +52,44 @@ App.prototype = {
 	showUserProfile: function() {
 		app.view.show(app.view.pages[3]);
 		app.view.reflectLogin();
+		app.showLurlList();
+	},
+	
+	showLurlDetails: function( _id ) {
+		console.log(_id);
+	},
+	
+	showLurlList: function() {
+			app.server.fetchLurl(app.user, app.current_page, app.max_results, app.cb_showLurlList);
+	},
+	
+	newLurl: function() {
+		var _lurl = $('#new-lurl').val();
+		if(_lurl != '') {
+			app.server.newLurl(app.user, _lurl, app.cb_newLurl);
+		}
+		else
+			$('#new-lurl').attr("placeholder", "please paste url here");
+	},
+	
+	cb_newLurl: function(data) {
+		app.current_page = 0;
+		app.showLurlList();
+	},
+	
+	cb_showLurlList: function(data) {
+		console.log(data);
 	},
 	
 	cb_login: function (data) {
-
+	
 		if(data.status === 'ok'){
 			app.showUserProfile();
 			if(app.user.remember)
 				app.user.createCookie();
 		}
 		else
-			alert("error - ", data.status);
+			app.view.showMessage(" login error - please try again");
 	},
 	
 	cb_signup: function (data) {
@@ -68,7 +99,7 @@ App.prototype = {
 			app.view.show(app.view.pages[0]);
 		}
 		else
-			app.view.showMessage("Signup Wrror - Please Try Again");
+			app.view.showMessage(" signup error - please try again");
 	}
 	
 

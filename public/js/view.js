@@ -1,6 +1,9 @@
 function View() {
 	this.pages = [$("#intro"), $("#login"), $("#signup"), $("#profile")];
 	this.stack = [];
+	
+	this.messageClearSchdeule = null;
+	this.messagePane = $("#message");
 }
 
 
@@ -41,6 +44,25 @@ View.prototype = {
 		$('#brand').html( "  -  by rahulroy9202@gmail.com");
 		$('#brand').click(null);
 		
+	},
+	
+	renderProfileData: function() {
+		
+	},
+	
+	renderLurlDetails: function() {
+		
+	},
+	
+	showMessage: function(_message, _duration) {
+		var self = this;	//setup scope. necause setTimeout changes scope to windows i guess.
+		if(self.messageClearSchdeule != null){
+			//TODO restet timer
+		}
+		self.messagePane.html(_message);
+		self.messageClearSchdeule = window.setTimeout( function() {
+			self.messagePane.html("");
+		}, 2000);
 	}
 
 }

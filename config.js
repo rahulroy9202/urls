@@ -4,6 +4,6 @@ module.exports = {
 	dburl : "mongodb://cloud9:cloud9@kahana.mongohq.com:10099/doba",
 	domains : [
 		'http://urls.rahulroy9202.in',
-		'http://urls-rahulroy9202.rhcloud.com'  //shouldnot use the https because that will result in empty header referer to target website.
+		'http://urls-rahulroy9202.rhcloud.com'  //shouldnot use the https because that will result in empty header referer to target website. why mess up their analytics. :D
 	]
 };

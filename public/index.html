@@ -45,7 +45,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand topnav"  href=""><i class="fa fa-home"></i> url shortner   <span id="brand">  </span></a>
+                <a class="navbar-brand topnav"  href=""><i class="fa fa-home"></i> url shortner   <span id="brand">  </span> <span id="message">  </span></a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -115,8 +115,8 @@
 					<h3>login</h3>
 
 					<div class="input-group">
-					  <span class="input-group-addon" ><i class="fa fa-user fa-fw"></i></span>
-					  <input type="text" id="login-username" class="form-control" placeholder="username" aria-describedby="basic-addon1">
+					  <span class="input-group-addon" ><i class="fa fa-envelope-o fa-fw"></i></span>
+					  <input type="text" id="login-username" class="form-control" placeholder="email" aria-describedby="basic-addon1">
 					</div><br>
 					<div class="input-group">
 					  <span class="input-group-addon" ><i class="fa fa-key fa-fw"></i></span>
@@ -145,15 +145,15 @@
 					<h3>signup</h3>
 					
 					<div class="input-group">
-					  <span class="input-group-addon" ><i class="fa fa-user fa-fw"></i></span>
-					  <input type="text"  id="signup-username" class="form-control" placeholder="username" aria-describedby="basic-addon1">
+					  <span class="input-group-addon" ><i class="fa fa-envelope-o fa-fw"></i></span>
+					  <input type="text"  id="signup-username" class="form-control" placeholder="email" aria-describedby="basic-addon1">
 					</div><br>
 					<div class="input-group">
-					  <span class="input-group-addon" ><i class="fa fa-star fa-fw"></i></span>
+					  <span class="input-group-addon" ><i class="fa fa-key fa-fw"></i></span>
 					  <input type="text"  id="signup-password" class="form-control" placeholder="password" aria-describedby="basic-addon1">
 					</div><br>
 					<div class="input-group">
-					  <span class="input-group-addon" ><i class="fa fa-star fa-fw"></i></span>
+					  <span class="input-group-addon" ><i class="fa fa-key fa-fw"></i></span>
 					  <input type="text"  id="signup-password-confirm" class="form-control" placeholder="confirm password" aria-describedby="basic-addon1">
 					</div><br>
 					
@@ -170,31 +170,28 @@
 					<h3>profile</h3>
 					<hr>
 					
+					<div class="input-group">
+						<span class="input-group-addon" ><i class="fa fa-plus fa-fw"></i></span>
+						<input type="text"  id="new-lurl" class="form-control" placeholder="paste new url here" aria-describedby="basic-addon1">
+						<span class="input-group-btn"><button class="btn btn-default" type="button" onClick="app.newLurl();"> Confirm </button></span>
+					</div>
+					
+					
 					<div class="row">
-						
-						
-						<div class="col-md-6 portfolio-item">	
-							<h3>
-								lurls
-							</h3>
-
-							<ul>
-								
-								<li><h4>place holder : this is long <a href="#" class="btn btn-warning btn-xs" ><i class="fa fa-trash fa-fw"></i>   <span class="">withdraw</span></a></h4>  </li>
-								<li><h4>place holder : this is long <a href="#" class="btn btn-danger btn-xs" ><i class="fa fa-trash fa-fw"></i>   <span class="">withdraw</span></a></h4>  </li>
-								<li><h4>place holder : this is long <a href="#" class="btn btn-default btn-xs" ><i class="fa fa-trash fa-fw"></i>   <span class="">withdraw</span></a></h4>  </li>
-								
+						<div class="col-md-6 portfolio-item">							
+							<h3>urls</h3>
+							
+							<ul id="urls-list">
+								<li><a href="#" onClick="app.showLurlDetails('54eff147ca223888162fba16');" <h4>place holder : this is long <i class="fa fa-trash fa-fw"></i></h4></a></li>
 							</ul>
-
+							
 						</div>
 						
 						
 						
 						<div class="col-md-6 portfolio-item">
-							<h3>
-								new
-							</h3>						
-							
+							<h3>details</h3>						
+							<div id="url-details"></div>
 
 								
 						</div>

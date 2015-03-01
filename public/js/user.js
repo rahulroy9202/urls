@@ -8,6 +8,7 @@ function User(_email, _pwd, _rem) {
 	}
 	this.remember = _rem || false;
 	this.isLoggedIn = false;
+	this.lurls = [];
 }
 
 User.prototype = {

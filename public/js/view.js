@@ -31,7 +31,7 @@ View.prototype = {
 		this.current = _page;
 		this.current.toggle(true);
 	},
-
+	
 	reflectLogin: function() {
 		$('#user_logout_button').toggle(true);
 		$('#brand').html("  -  " + app.user.email);
@@ -43,6 +43,8 @@ View.prototype = {
 		$('#user_logout_button').toggle(false);
 		$('#brand').html( "  -  by rahulroy9202@gmail.com");
 		$('#brand').click(null);
+		$('#urls-list').html("");
+		$('#urls-details').html("");
 		
 	},
 	
@@ -54,14 +56,24 @@ View.prototype = {
 		
 	},
 	
+	renderLurls: function(_data) {
+		var html = "";
+		for(var i in _data.lurls){
+			 html = html + '<li onClick="app.showLurlDetails(&quot;' + _data.lurls[i]._id +'&quot;);"><a href="#profile" ><h3>' + _data.lurls[i].lurl + '</h3></a></li>';
+		}
+		
+		$('#urls-list').html(html);
+	},
+	
 	showMessage: function(_message, _duration) {
-		var self = this;	//setup scope. necause setTimeout changes scope to windows i guess.
+		var self = this;			//setup scope. necause setTimeout changes scope to windows i guess.
 		if(self.messageClearSchdeule != null){
-			//TODO restet timer
+			window.clearTimeout(self.messageClearSchdeule);		//reset timer
 		}
 		self.messagePane.html(_message);
 		self.messageClearSchdeule = window.setTimeout( function() {
 			self.messagePane.html("");
+			self.messageClearSchdeule = null;
 		}, 2000);
 	}
 

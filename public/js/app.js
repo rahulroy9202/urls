@@ -2,7 +2,6 @@ var app;
 
 $(document).ready(function() {
 	app = new App();
-	
 });
 
 function App() {
@@ -78,7 +77,9 @@ App.prototype = {
 	},
 	
 	cb_showLurlList: function(data) {
-		console.log(data);
+		//console.log(data);
+		if(data.status === 'ok')
+			app.view.renderLurls(data);
 	},
 	
 	cb_login: function (data) {
@@ -95,7 +96,7 @@ App.prototype = {
 	cb_signup: function (data) {
 
 		if(data.status === 'ok'){
-			app.view.showMessage("Signup Success");
+			app.view.showMessage(" signup success");
 			app.view.show(app.view.pages[0]);
 		}
 		else

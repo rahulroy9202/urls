@@ -51,7 +51,7 @@ function CustomAJAX(_type, _url, _data, _cb) {
 			}
 		},
 		error: function(xhr, _status, errorThrown) {
-			_cb({status: _status});
+			_cb({status: _status, err: errorThrown});
 			console.log("Status: " + status);
 		},
 	});

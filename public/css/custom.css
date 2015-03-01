@@ -21,16 +21,10 @@
     float:none;
     /* reset the text-align */
     text-align:left;
-    /* inline-block space fix */
-    margin-right:-4px;
+    /* inline-block space fix 
+    margin-right:-4px;*/
 }
 
-
-.datepicker {
-	//width: inherit;
-	//margin: auto;
-	//margin-top: 50px;
-}
 
 .inline {
 	display: inline;
@@ -39,4 +33,8 @@
 
 .lurl_list {
 	color: #00bfff !important ;
+}
+
+.text_fix {
+	text-align:left; !important ;
 }

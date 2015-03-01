@@ -38,6 +38,7 @@ App.prototype = {
 	
 	logout: function() {
 		app.user.logout(true);		//true removes cookies too. 
+		app.view.reflectLogout();
 		app.view.show(app.view.pages[0]);
 	},
 	

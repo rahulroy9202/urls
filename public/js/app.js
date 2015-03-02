@@ -12,7 +12,7 @@ function App() {
 	//for secured connection. I don't have a certificate. so cannot do https over urls.rahulroy9202.in
 	this.server = new UrlsServer("https://urls-rahulroy9202.rhcloud.com");
 	this.view = new View();
-	this.view.show(this.view.pages[1]);
+	this.view.show(this.view.pages[0]);
 	this.user = new User();
 	
 	if(this.user.readCookie()){

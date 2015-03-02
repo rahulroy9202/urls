@@ -73,7 +73,7 @@ View.prototype = {
 		$('#url-full-address').html(this.currentLurl.lurl);
 		for(var i in this.currentLurl.surl){
 			console.log("DUM- ", this.currentLurl.surl[i]);
-			tmp += '<li onClick="copyToClipboard(&quot;'+this.currentLurl.surl[i] +'&quot;);">'+this.currentLurl.surl[i]+'</li>'
+			tmp += '<li onClick="copyToClipboard(&quot;'+this.currentLurl.surl[i] +'&quot;);">'+this.currentLurl.surl[i]+'</li><hr>'
 		
 		}
 		console.log("tmp-  ",tmp);

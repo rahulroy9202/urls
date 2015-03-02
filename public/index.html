@@ -193,12 +193,29 @@
 						
 						<div class="col-md-6 portfolio-item">
 							
+							<!-- <div class="row">
+							<div class="input-group">
 								<div class="input-group-btn">
 									<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ><span id="default-domain" >http://urls.rahulroy9202.in/</span><span class="caret"></span></button>
 									<ul  class="dropdown-menu" role="menu">
 									  <li><a onClick="app.view.handleDomainToggle();" id="domain-select" href="#n">http://urls-rahulroy9202.rhcloud.com/</a></li>
 									</ul>
+									<span class="input-group-btn">
+										<button class="btn btn-default" type="button">Go!</button>
+									</span>
 								</div>
+							</div></div> -->
+							
+							<div class="input-group">
+							  <div class="input-group-btn">
+								<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span id="default-domain" >http://urls.rahulroy9202.in/</span><span class="caret"></span></button>
+								<ul class="dropdown-menu" role="menu">
+								  <li><a onClick="app.view.handleDomainToggle();" id="domain-select" href="#n">http://urls-rahulroy9202.rhcloud.com/</a></li>
+								</ul>
+								<button class="btn btn-default" onClick="app.newSurl();" id="btn_new_surl" type="button">add short url</button>
+								</div><!-- /btn-group -->  
+							</div><!-- /input-group -->
+
 							<h3>details</h3>
 							<div id="url-details">
 								<div id="url-full-address"></div>

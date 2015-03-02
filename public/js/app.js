@@ -77,6 +77,11 @@ App.prototype = {
 			$('#new-lurl').attr("placeholder", "please paste url here");
 	},
 	
+	newSurl: function() {
+		app.server.addSurl(app.user, app.view.currentLurl._id, app.cb_newSurl);
+		
+	},
+	
 	cb_newLurl: function(data) {
 		if(data.status === 'ok'){
 			app.view.showMessage(" done - new short url ready");
@@ -91,6 +96,17 @@ App.prototype = {
 		if(data.status === 'ok')
 			app.view.renderLurls(data);
 			app.user.lurls = data.lurls;
+			
+	},
+	
+	cb_newSurl: function(data) {
+			console.log("SURL ADDED- ",data);
+			app.view.renderLurlDetails(data.lurl);
+			
+			for(var i in app.user.lurls){
+				if(app.user.lurls[i]._id.toString() === data.lurl._id.toString())
+				app.user.lurls[i] = data.lurl;
+			}
 			
 	},
 	

@@ -7,6 +7,8 @@ function View() {
 	
 	this.defaultDisplayDomain = 'http://urls.rahulroy9202.in/';
 	this.currentLurl = null;
+	
+	$('#btn_new_surl').prop("disabled",true);
 }
 
 
@@ -77,7 +79,7 @@ View.prototype = {
 		console.log("tmp-  ",tmp);
 		$("#surls-list").html(tmp);
 		
-		
+		$('#btn_new_surl').prop("disabled",false);
 	},
 	
 	renderLurls: function(_data) {

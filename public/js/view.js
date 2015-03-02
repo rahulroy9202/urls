@@ -59,9 +59,11 @@ View.prototype = {
 	renderLurls: function(_data) {
 		var html = "";
 		for(var i in _data.lurls){
+			
 			var text = _data.lurls[i].lurl.toString();
+			
 			if(text.length > 40)
-				text = text.substr(0,40);
+				text = text.substr(0,37) + '...';
 			
 			 html = html + '<li title="' + _data.lurls[i].lurl + '" class="lurl_list" onClick="app.showLurlDetails(&quot;' + _data.lurls[i]._id +'&quot;);"><a href="#url-details" ><h4>' + text + '</h4></a></li>';
 		}

@@ -17,7 +17,6 @@ app.use(function(req, res, next) {
 	//console.log(req.headers);
 	//console.log(req.headers.referrer);
 	
-
 	res.header("Access-Control-Allow-Origin", "*");
 	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 	next();
@@ -46,7 +45,7 @@ app.get('/:surl/', function (req, res) {
 	}, function (err, doc) {
 	
 		if (!err && doc!=null){
-			res.redirect(301, doc.lurl);			console.log("\nTODO: Do the logging");
+			res.redirect(301, doc.lurl);
 			
 			var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 			
@@ -155,46 +154,4 @@ app.post('/api/v1/lurl/addsurl/', function(req, res) {
 		return res.status(500).json({status: "err - insuficient data"});
 });
 
-
-/*
-app.post('/api/v1/surl/get/', function(req, res) {
-	auth(req, res, function (_user) {
-		console.log(_user);
-		return res.json({status:'ok', user: _user});
-	});
-});
-
-app.post('/api/v1/surl/all/:page/', function(req, res) {
-	auth(req, res, function (_user) {
-		console.log(_user);
-		return res.json({status:'ok', user: _user});
-	});
-});
-*/
-
-
-
-
-
-/*
-app.get('/:surl', function(req, res) {
-	
-    res.send('everything ok - server');
-});
-
-
-app.get('/url/', function(req, res) {
-	
-    res.send('2 everything ok - server');
-});
-
-
-app.post('/:surl', function(req, res) {
-	console.log(req.url);
-	console.log(req.body);
-	//console.log(req.headers);
-	res.json({status:'everything ok - server'});
-});
-
-*/
 

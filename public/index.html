@@ -172,24 +172,19 @@
 					
 					<div class="input-group">
 						<!-- <span class="input-group-addon" ><i class="fa fa-plus fa-fw"></i></span> -->
-						<div class="input-group-btn">
-							<span>Select Default Domain</span><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" id="default-domain">http://urls.rahulroy9202.in/</button><span class="caret"></span>
-							<ul  class="dropdown-menu" role="menu">
-							  <li><a onClick="app.view.handleDomainToggle();" id="domain-select" href="#n">http://urls-rahulroy9202.rhcloud.com/</a></li>
-							</ul>
-						</div>
+						
 						
 						<input type="text"  id="new-lurl" class="form-control" placeholder="paste new url here" aria-describedby="basic-addon1">
 						<span class="input-group-btn"><button id="btn-confirm" class="btn btn-default" type="button" onClick="app.newLurl();"> Confirm </button></span>
 					</div>
 					
-					
+					<hr>
 					<div class="row">
 						<div class="col-md-6 portfolio-item">							
 							<h3>urls</h3>
 							
 							<ul id="urls-list" class="text_fix">
-								<li onClick="app.showLurlDetails('54eff147ca223888162fba16');"><a href="#profile" ><h3>place holder : this is long </h3></a></li>
+								<li class="lurl_list" onClick="app.showLurlDetails('54eff147ca223888162fba16');"><a href="#profile" >place holder : this is long </a></li>
 							</ul>
 							
 						</div>
@@ -197,10 +192,21 @@
 						
 						
 						<div class="col-md-6 portfolio-item">
-							<h3>details</h3>						
-							<div id="url-details"></div>
-
-								
+							
+								<div class="input-group-btn">
+									<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ><span id="default-domain" >http://urls.rahulroy9202.in/</span><span class="caret"></span></button>
+									<ul  class="dropdown-menu" role="menu">
+									  <li><a onClick="app.view.handleDomainToggle();" id="domain-select" href="#n">http://urls-rahulroy9202.rhcloud.com/</a></li>
+									</ul>
+								</div>
+							<h3>details</h3>
+							<div id="url-details">
+								<div id="url-full-address"></div>
+								<hr>
+								<ul id="surls-list" class="text_fix">
+									<li></li>
+								</ul>
+							</div>
 						</div>
 						
 					</div>

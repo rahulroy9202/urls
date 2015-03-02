@@ -6,6 +6,7 @@ function View() {
 	this.messagePane = $("#message");
 	
 	this.defaultDisplayDomain = 'http://urls.rahulroy9202.in/';
+	this.currentLurl = null;
 }
 
 
@@ -61,11 +62,26 @@ View.prototype = {
 		
 	},
 	
-	renderLurlDetails: function(data) {
-		console.log("viw-",data);
+	renderLurlDetails: function(_data) {
+		console.log("viw-", _data);
+		this.currentLurl = _data;
+		var tmp = '';
+		
+		
+		$('#url-full-address').html(this.currentLurl.lurl);
+		for(var i in this.currentLurl.surl){
+			console.log("DUM- ", this.currentLurl.surl[i]);
+			tmp += '<li onClick="copyToClipboard(&quot;'+this.currentLurl.surl[i] +'&quot;);">'+this.currentLurl.surl[i]+'</li>'
+		
+		}
+		console.log("tmp-  ",tmp);
+		$("#surls-list").html(tmp);
+		
+		
 	},
 	
 	renderLurls: function(_data) {
+		
 		var html = "";
 		for(var i in _data.lurls){
 			

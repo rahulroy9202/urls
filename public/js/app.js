@@ -26,6 +26,9 @@ function App() {
 	}
 }
 
+function copyToClipboard(text) {
+  window.prompt("Copy to clipboard: Ctrl+C, Enter", (app.view.defaultDisplayDomain + text));
+}
 
 App.prototype = {
 	

@@ -1,6 +1,7 @@
 // client library for urls. api v1
 function UrlsServer(_url) {
 	this.url = _url;
+	this.getDomains();
 	//this.user = null;
 }
 
@@ -27,6 +28,17 @@ UrlsServer.prototype = {
 	
 	newLurl: function(_user, _lurl, _cb) {
 		CustomAJAX('POST', this.url + '/api/v1/lurl/new/',{email: _user.email, password: _user.password, lurl: _lurl}, _cb);
+	},
+	
+	getDomains: function(_cb) {
+		self = this;			//scope setup. required for callback.
+		CustomAJAX('GET', this.url + '/api/v1/domains/',{}, function(data) {
+			if(data.status==='ok')
+				self.domains = data.domains;
+			else
+				self.getDomains();
+			console.log(self,data);
+		});
 	}
 	
 	

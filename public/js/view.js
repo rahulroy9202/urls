@@ -4,6 +4,8 @@ function View() {
 	
 	this.messageClearSchdeule = null;
 	this.messagePane = $("#message");
+	
+	this.defaultDisplayDomain = 'http://urls.rahulroy9202.in/';
 }
 
 
@@ -48,12 +50,19 @@ View.prototype = {
 		
 	},
 	
+	handleDomainToggle: function() {
+		var tmp = $('#domain-select').html();
+		//console.log('DD-',$('#domain-select').html(),$('#default-domain').html());
+		$('#domain-select').html($('#default-domain').html());
+		$('#default-domain').html(tmp)
+		app.view.defaultDisplayDomain = tmp;
+	},
 	renderProfileData: function() {
 		
 	},
 	
-	renderLurlDetails: function() {
-		
+	renderLurlDetails: function(data) {
+		console.log("viw-",data);
 	},
 	
 	renderLurls: function(_data) {
@@ -65,7 +74,7 @@ View.prototype = {
 			if(text.length > 40)
 				text = text.substr(0,37) + '...';
 			
-			 html = html + '<li title="' + _data.lurls[i].lurl + '" class="lurl_list" onClick="app.showLurlDetails(&quot;' + _data.lurls[i]._id +'&quot;);"><a href="#url-details" ><h4>' + text + '</h4></a></li>';
+			 html = html + '<li title="' + _data.lurls[i].lurl + '" class="lurl_list" onClick="app.showLurlDetails(&quot;' + i +'&quot;);"><a href="#n" ><h4>' + text + '</h4></a></li>';
 		}
 		
 		$('#urls-list').html(html);

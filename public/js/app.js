@@ -12,7 +12,7 @@ function App() {
 	//for secured connection. I don't have a certificate. so cannot do https over urls.rahulroy9202.in
 	this.server = new UrlsServer("https://urls-rahulroy9202.rhcloud.com");
 	this.view = new View();
-	this.view.show(this.view.pages[0]);
+	this.view.show(this.view.pages[1]);
 	this.user = new User();
 	
 	if(this.user.readCookie()){
@@ -57,6 +57,7 @@ App.prototype = {
 	
 	showLurlDetails: function( _id ) {
 		console.log(_id);
+		app.view.renderLurlDetails(app.user.lurls[+_id]);
 	},
 	
 	showLurlList: function() {
@@ -86,6 +87,8 @@ App.prototype = {
 	cb_showLurlList: function(data) {
 		if(data.status === 'ok')
 			app.view.renderLurls(data);
+			app.user.lurls = data.lurls;
+			
 	},
 	
 	cb_login: function (data) {

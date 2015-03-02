@@ -171,7 +171,14 @@
 					<hr>
 					
 					<div class="input-group">
-						<span class="input-group-addon" ><i class="fa fa-plus fa-fw"></i></span>
+						<!-- <span class="input-group-addon" ><i class="fa fa-plus fa-fw"></i></span> -->
+						<div class="input-group-btn">
+							<span>Select Default Domain</span><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" id="default-domain">http://urls.rahulroy9202.in/</button><span class="caret"></span>
+							<ul  class="dropdown-menu" role="menu">
+							  <li><a onClick="app.view.handleDomainToggle();" id="domain-select" href="#n">http://urls-rahulroy9202.rhcloud.com/</a></li>
+							</ul>
+						</div>
+						
 						<input type="text"  id="new-lurl" class="form-control" placeholder="paste new url here" aria-describedby="basic-addon1">
 						<span class="input-group-btn"><button id="btn-confirm" class="btn btn-default" type="button" onClick="app.newLurl();"> Confirm </button></span>
 					</div>

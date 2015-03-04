@@ -89,13 +89,15 @@ View.prototype = {
 			
 			var text = _data.lurls[i].lurl.toString();
 			
-			if(text.length > 40)
-				text = text.substr(0,37) + '...';
+			if(text.length > 30)
+				text = text.substr(0,30) + '...';
 			
 			 html = html + '<li title="' + _data.lurls[i].lurl + '" class="lurl_list" onClick="app.showLurlDetails(&quot;' + i +'&quot;);"><a href="#n" ><h4>' + text + '</h4></a></li>';
 		}
 		
 		$('#urls-list').html(html);
+		
+		this.renderLurlDetails(_data.lurls[0]);
 	},
 	
 	showMessage: function(_message, _duration) {
